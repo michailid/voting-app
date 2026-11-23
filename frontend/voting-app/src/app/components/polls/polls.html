@@ -1,0 +1,40 @@
+<div class="mx-auto d-flex flex-column align-items-center">
+  <h1 class="text-center mt-4">Create Poll</h1>
+  <input type="text" class="w-75 mb-4 form-control" placeholder="Poll Question" [(ngModel)]="newPoll.question"/>
+  @for (optionVote of newPoll.options; track $index) {
+    @if (newPoll.options.length > 2) {
+      <div class="input-group w-75 mb-2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Option"
+          [(ngModel)]="optionVote.voteOption"
+        />
+        <button class="btn btn-danger" (click)="removeOption($index)">Remove</button>
+      </div>
+    } @else {
+      <input
+        type="text"
+        class="w-75 mb-2 form-control"
+        placeholder="Option"
+        [(ngModel)]="optionVote.voteOption"
+      />
+    }
+  }
+  <div id="buttons" class="w-75 mt-2 d-flex flex-row align-items-start">
+    <button class="btn btn-secondary" (click)="addOption()">Add Another Option</button>
+    <button class="btn btn-primary" (click)="createPoll()">Create Poll</button>
+  </div>
+
+  <h1 class="mt-5">Available Polls</h1>
+  @for (poll of polls(); track $index) {
+    <div class="card w-75 mt-2 p-2">
+      <span class="fs-5 fw-semibold">{{ poll.question }}</span>
+      @for (option of poll.options; track $index) {
+        <button class="btn btn-outline-primary align-self-start mt-2">
+          {{ option.voteOption }} ({{ option.voteCount }} votes)
+        </button>
+      }
+    </div>
+  }
+</div>

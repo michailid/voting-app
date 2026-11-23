@@ -48,6 +48,11 @@ export class Polls implements OnInit {
   }
 
   createPoll() {
+    if (!this.isPollValid()) {
+      alert('Please fill al the fields.');
+      return;
+    }
+
     this.pollService.createPoll(this.newPoll).subscribe({
       next: (createdPoll: Poll) => {
         this.polls.update((pollsArr) => [...pollsArr, createdPoll]);
@@ -82,5 +87,14 @@ export class Polls implements OnInit {
         alert('Error: ' + error.message);
       },
     });
+  }
+
+  isPollValid(): boolean {
+    const questionFilled = this.newPoll.question.trim().length > 0;
+    const allOptionsFilled = this.newPoll.options.every(
+      (optionVote) => optionVote.voteOption.trim().length > 0,
+    );
+
+    return questionFilled && allOptionsFilled;
   }
 }

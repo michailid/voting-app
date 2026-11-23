@@ -27,11 +27,11 @@
   </div>
 
   <h1 class="mt-5">Available Polls</h1>
-  @for (poll of polls(); track $index) {
+  @for (poll of polls(); track poll) {
     <div class="card w-75 mt-2 p-2">
       <span class="fs-5 fw-semibold">{{ poll.question }}</span>
       @for (option of poll.options; track $index) {
-        <button class="btn btn-outline-primary align-self-start mt-2">
+        <button class="btn btn-outline-primary align-self-start mt-2" (click)="vote(poll.id, $index)">
           {{ option.voteOption }} ({{ option.voteCount }} votes)
         </button>
       }

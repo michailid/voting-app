@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Poll } from '../model/poll.models';
+import { Vote } from '../model/vote.models';
 
 @Service()
 export class PollService {
@@ -13,5 +14,9 @@ export class PollService {
 
   createPoll(poll: Poll): Observable<Poll> {
     return this.http.post<Poll>('http://localhost:8080/api/polls', poll);
+  }
+
+  vote(vote: Vote): Observable<void> {
+    return this.http.post<void>('http://localhost:8080/api/polls/vote', vote);
   }
 }
